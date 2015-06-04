@@ -37,11 +37,10 @@ def fact_digits(n):
     return sum
 
 def palindrome(obj):
-    a = str(obj)
-    return a == reversed(a)
+    return str(obj)[::-1] == str(obj)
 
 
-def to_digit(n):
+def to_digits(n):
     digits = []
     while n!= 0:
         s = n%10
@@ -56,6 +55,16 @@ def to_number(n):
     for i in n:
         number = number*10 + i
     return number
+
+def fib_number(n):
+    size = len(fibonacci(n))
+    print("Size is {}".format(size))
+    d = pow(10, size-1)
+    result = 0
+    for number in fibonacci(n):
+        result += number*d
+        d /= 10
+    return result
 
 def count_vowels(word):
     vowels = "aeiouy"
@@ -86,24 +95,41 @@ def char_histogram(word):
             histogram[ch] = 1
     return histogram
 
-def now():
-    sum1 = 0
-    n = 10
-    s = [1,2,3,4,5,6]
-    for k in s:
-        sum1 += (pow(4, n-2*k)*factorial(n))/(pow(6, n)*factorial(k)*(factorial(n-2*k)))
 
-    print(sum1)
+def p_score(n):
+    if palindrome(n):
+        return 1
 
-#def p_score(n):
- #   count = 0
-  #  if palindrome(n):
-   #     return 1
-   # else:
-#        while not palindrome(n):
- ##          n = 1 + n + int(s)
-   #         count +=1
-#
- #   return count
-#
-#print(p_score(121))
+    number = n + int(str(n)[::-1])
+    return 1 + p_score(number)
+
+def is_increasing(seq):
+    size = len(seq)
+    flag = True
+    for n in range(1,size):
+        if seq[n] <= seq[n-1]:
+            flag = False
+    return flag
+
+def is_decreasing(seq):
+    size = len(seq)
+    flag = True
+    for n in range(1,size):
+        if seq[n] >= seq[n-1]:
+            flag = False
+    return flag
+
+def is_odd(n):
+    return n%2 != 0
+
+def is_hack(n):
+    bin_n = bin(n)[2:]
+    return palindrome(bin_n) and is_odd(bin_n.count("1"))
+
+
+def next_hack(n):
+    n+=1
+    while not is_hack(n):
+        n+=1
+    return n
+
